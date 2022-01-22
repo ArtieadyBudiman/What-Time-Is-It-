@@ -1,28 +1,31 @@
 import { useState, useEffect } from 'react/cjs/react.development';
-import axios from "axios";
+import axios from 'axios';
 
 const Quotes = ()=>{
-   const [author, setAuthor] = useState("");
-   const [quotes, setQuotes] = useState("");
+   const [quotes, setQuotes] = useState('');
+   const [author, setAuthor] = useState('');
    
    useEffect(() => {
       const getQuotes = () => {
-         axios({
-            method: "get",
-            url: "https://api.quotable.io/random",
-         }).then((res) => {
+         axios(
+               {
+               method: 'get',
+               url: 'https://api.quotable.io/random',
+               }
+            ).then((res) => {
                setAuthor(res.data.author);
                setQuotes(res.data.content);
             });
          };
          getQuotes();
-
+         
       const displayQuotes = setInterval(() => {getQuotes()}, 60000 * 5);
-   
+
       return () => {
          clearInterval(displayQuotes);
       };
-      }, []);
+
+   }, []);
 
    return (
       <div className="quotesContainer">
